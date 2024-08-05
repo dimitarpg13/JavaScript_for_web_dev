@@ -50,5 +50,44 @@ console.log(morePeople.indexOf(person));  // 0
 console.log(people.includes(person));     // false
 console.log(morePeople.includes(person)); // true
 
+// predicate search
+const people_pred_search = [
+    {
+       name: "Matt",
+       age: 27
+    },
+    {
+       name: "Nicholas",
+       age: 29
+    }
+];
 
 
+console.log("\n--- predicate search ---\n");
+
+console.log("people.find: ", people_pred_search.find((element, index, array) => element.age < 28));
+// {name: "Matt", age: 27}
+
+console.log("people.findIndex: ", people_pred_search.findIndex((element, index, array) => element.age < 28));
+// 0
+
+ const evens = [2, 4, 6];
+
+ // last element of array will never be inspected after match is found
+ evens.find((element, index, array) => {
+    console.log(element);
+    console.log(index);
+    console.log(array);
+    return element === 4;
+ })
+
+ // 2
+ // 0
+ // [2, 4, 6]
+ // 4
+ // 1
+ // [2, 4, 5]
+
+ // iterative methods
+
+ 

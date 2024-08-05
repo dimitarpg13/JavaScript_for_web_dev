@@ -73,6 +73,7 @@ console.log("people.findIndex: ", people_pred_search.findIndex((element, index, 
 
  const evens = [2, 4, 6];
 
+ console.log('evens.find =');
  // last element of array will never be inspected after match is found
  evens.find((element, index, array) => {
     console.log(element);
@@ -90,4 +91,22 @@ console.log("people.findIndex: ", people_pred_search.findIndex((element, index, 
 
  // iterative methods
 
- 
+ let numbers = [1, 2, 3, 4, 5, 4, 3, 2, 1];
+
+ let everyResult = numbers.every((item, index, array) => item > 2);
+ console.log('everyResult =', everyResult); // false
+
+ let someResult = numbers.some((item, index, array) => item > 2);
+ console.log('someResult =', someResult); // true
+
+ let filterResult = numbers.filter((item, index, array) => item > 2);
+ console.log('filterResult =', filterResult); // [3, 4, 5, 4, 3]
+
+ let mapResult = numbers.map((item, index, array) => item * 2);
+
+ console.log('mapResult =', mapResult); // [2, 4, 6, 8, 10, 8, 6, 4, 2]
+
+ numbers.forEach((item, index, array) => {
+    // do something here
+    console.log('inside forEach: item =', item, 'index =', index, 'array =', array);
+ });

@@ -143,16 +143,18 @@ console.log("people.findIndex: ", people_pred_search.findIndex((element, index, 
 
  // demonstrate that the entire buffer is indeed all zeros
  // check the first and the second byte
- console.log(view.getInt8(0)); // 0
- console.log(view.getInt8(1)); // 0
+ console.log('view.getInt8(0): ', view.getInt8(0)); // 0
+ console.log('view.getInt8(1): ', view.getInt8(1)); // 0
  // check the entire buffer
- console.log(view.getInt16(0)); // 0
+ console.log('view.getInt16(0): ', view.getInt16(0)); // 0
 // set the entire buffer to ones
 view.setUint8(0, 255);
 // DataView will automatically cast values to the designated ElementType
 // 255 in hex is 0xFF
 view.setUint8(1, 0xFF);
 
+console.log('view.getInt16(0): ', view.getInt16(0)); // -1
+//
 
 
 

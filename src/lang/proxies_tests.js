@@ -55,7 +55,8 @@ console.log("proxy.hasOwnProperty('id'): ", proxy.hasOwnProperty('id')); // true
 //console.log("target instanceof Proxy: ",target instanceof Proxy); // false
 //console.log("proxy instanceof Proxy: ", proxy instanceof Proxy); // false
 
-
+// differentiate proxy from target with strict object equality
+console.log("target === proxy: ", target === proxy);
 
 
 

@@ -170,5 +170,22 @@ console.log('target_bar_qux.baz: ', target_bar_qux.baz);
 
 // revocable proxies
 //
-// 
+// disble the association between the proxy object and the target object 
+// Any method called on a proxy after it is revoked will throw a `TypeError`.
+
+const handler_revoke = {
+    get() {
+        return 'intercepted';
+    }
+};
+
+const { proxy_revocable, revoke } = Proxy.revocable(target_bar, handler_revoke);
+console.log('proxy_revocable.foo: ', proxy_revocable.foo); // intercepted
+console.log('target_bar.foo: ', target_bar.foo);
+
+revoke();
+
+// console.log(proxy_revocable.foo); throws `TypeError`
+
+
 

@@ -14,34 +14,34 @@
 // As shown below, all operations performed on the proxy will be effectively applied to the 
 // target object instead. The only perceptible difference is the identity of the proxy object.
 
-const target = {
+const target_simple = {
     id: 'target'
 };
 
 const handler_empty = {};
 
-const proxy = new Proxy(target, handler_empty);
+const proxy_simple = new Proxy(target_simple, handler_empty);
 
 // The 'id' property will access the same value
-console.log('target.id: ', target.id);  // target
-console.log('proxy.id: ', proxy.id);   // target
+console.log('target_simple.id: ', target_simple.id);  // target
+console.log('proxy_simple.id: ', proxy_simple.id);   // target
 
 // Assignment to a target property changes both since
 // both are accessing the same value.
-target.id = 'foo';
-console.log('target.id: ', target.id); // foo
-console.log('proxy.id: ', proxy.id);  // foo
+target_simple.id = 'foo';
+console.log('target_simple.id: ', target_simple.id); // foo
+console.log('proxy_simple.id: ', proxy_simple.id);  // foo
 
 // assignment to a proxy property changes both since 
 // this assignment is conferred to the target object.
-proxy.id = 'bar';
-console.log('target.id: ', target.id);  // bar
-console.log('proxy.id: ', proxy.id); // bar
+proxy_simple.id = 'bar';
+console.log('target_simple.id: ', target_simple.id);  // bar
+console.log('proxy_simple.id: ', proxy_simple.id); // bar
 
 // the hasOwnProperty() method is effectively applied
 // to the target in both cases.
-console.log("target.hasOwnProperty('id'): ",target.hasOwnProperty('id'));  // true
-console.log("proxy.hasOwnProperty('id'): ", proxy.hasOwnProperty('id')); // true
+console.log("target_simple.hasOwnProperty('id'): ",target_simple.hasOwnProperty('id'));  // true
+console.log("proxy_simple.hasOwnProperty('id'): ", proxy_simple.hasOwnProperty('id')); // true
 
 // the instanceof operator is effectively applied to the target in both cases
 
@@ -56,7 +56,7 @@ console.log("proxy.hasOwnProperty('id'): ", proxy.hasOwnProperty('id')); // true
 //console.log("proxy instanceof Proxy: ", proxy instanceof Proxy); // false
 
 // differentiate proxy from target with strict object equality
-console.log("target === proxy: ", target === proxy);
+console.log("target_simple === proxy_simple: ", target_simple === proxy_simple);
 
 // defining traps
 
@@ -92,12 +92,53 @@ console.log(Object.create(proxy_with_handler)['foo']);    // handler override
 
 const handler_with_lookup = {
     get(trapTarget, property, receiver) {
-        console.log('trapTarget === target', trapTarget === target);
+        console.log('trapTarget === target', trapTarget === target_bar);
         console.log('property: ', property);
-        console.log('receiver === proxy: ', receiver === proxy);
+        console.log('receiver === proxy: ', receiver === proxy_with_lookup);
     }
 }
 
 const proxy_with_lookup = new Proxy(target_bar, handler_with_lookup);
 
 console.log('proxy_with_lookup.foo: ', proxy_with_lookup.foo);
+
+// we can define a trap handler that wholly recreates the behavior of the method being trapped
+
+const handler_recreate = {
+    get(trapTarget, property, receiver) {
+        return trapTarget[property];
+    }
+};
+
+const proxy_recreates = new Proxy(target_bar, handler_recreate);
+
+console.log("proxy_recreates.foo: ", proxy_recreates.foo);   // bar
+console.log("target_bar.foo: ", target_bar.foo);
+
+// The original behavior of the trapped method is wrapped inside an identically named method on the 
+// global Refelct object.
+// Every method that can be trapped inside a handler object has a corresponding Reflect API method. 
+// This method has an identical name and function signature, and performs the exact behavior that 
+// the trapped method is intercepting. Therefore, it is possible to define a passthrough proxy using
+// only the Reflect API:
+
+const handler_reflect= {
+   get() {
+     return Reflect.get(...arguments);
+   }
+}
+
+const proxy_reflect = new Proxy(target_bar, handler_reflect);
+
+console.log('proxy_reflect.foo: ', proxy_reflect.foo); // bar
+console.log('target_bar.foo: ', target_bar.foo); // bar
+
+// in more succinct format
+const handler_succinct_reflect = {
+    get: Reflect.get
+};
+
+const proxy_succinct_reflect = new Proxy(target_bar, handler_succinct_reflect);
+console.log('proxy_succinct_reflect.foo: ', proxy_succinct_reflect.foo);
+console.log('target_bar.foo: ', target_bar.foo);
+

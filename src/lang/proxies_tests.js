@@ -142,3 +142,33 @@ const proxy_succinct_reflect = new Proxy(target_bar, handler_succinct_reflect);
 console.log('proxy_succinct_reflect.foo: ', proxy_succinct_reflect.foo);
 console.log('target_bar.foo: ', target_bar.foo);
 
+const proxy_true_passthrough = new Proxy(target_bar, Reflect);
+console.log('proxy_succinct_reflect.foo: ', proxy_succinct_reflect.foo);  // bar
+console.log('target_bar.foo: ', target_bar.foo); // bar
+
+const target_bar_qux = {
+   foo: 'bar',
+   baz: 'qux'
+};
+
+const handler_decorate = {
+    get(trapTarget, property, reciever) {
+        let decoration = '';
+        if (property === 'foo') {
+            decoration = '!!!';
+        }
+
+        return Reflect.get(...arguments) + decoration;
+    }
+}
+
+const proxy_decorated = new Proxy(target_bar_qux, handler_decorate);
+console.log('proxy_decorated.foo: ', proxy_decorated.foo);
+console.log('target_bar_qux.foo: ', target_bar_qux.foo);
+console.log('proxy_decorated.baz: ', proxy_decorated.baz);
+console.log('target_bar_qux.baz: ', target_bar_qux.baz);
+
+// revocable proxies
+//
+// 
+

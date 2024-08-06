@@ -18,9 +18,9 @@ const target = {
     id: 'target'
 };
 
-const handler = {};
+const handler_empty = {};
 
-const proxy = new Proxy(target, handler);
+const proxy = new Proxy(target, handler_empty);
 
 // The 'id' property will access the same value
 console.log('target.id: ', target.id);  // target
@@ -58,6 +58,46 @@ console.log("proxy.hasOwnProperty('id'): ", proxy.hasOwnProperty('id')); // true
 // differentiate proxy from target with strict object equality
 console.log("target === proxy: ", target === proxy);
 
+// defining traps
 
+// the primary purpose of a proxy is to allow you to define traps which behave as 
+// fundamental operation interceptors inside the handler object. Each handler object is made
+// up of zero, one or many traps and each trap corresponds to a fundamental operation that
+// can be directly or indirectly called on the proxy. When these fundamental operations are
+// called on the proxy object, before being invoked on the target object, the proxy will invoke
+// the trap function instead, allowing you to intercept and modify its behavior.
 
+// example of a get() trap
 
+const target_bar = {
+    foo: 'bar'
+};
+
+const handler_get = {
+   get() {
+    return 'handler override';
+   }
+};
+
+const proxy_with_handler = new Proxy(target_bar, handler_get);
+
+console.log("target.foo: ", target_bar.foo);  // bar
+console.log("proxy.foo: ", proxy_with_handler.foo); // handler override
+
+console.log(target_bar['foo']);   // bar
+console.log(proxy_with_handler['foo']);    // handler override
+
+console.log(Object.create(target_bar)['foo']);   // bar
+console.log(Object.create(proxy_with_handler)['foo']);    // handler override
+
+const handler_with_lookup = {
+    get(trapTarget, property, receiver) {
+        console.log('trapTarget === target', trapTarget === target);
+        console.log('property: ', property);
+        console.log('receiver === proxy: ', receiver === proxy);
+    }
+}
+
+const proxy_with_lookup = new Proxy(target_bar, handler_with_lookup);
+
+console.log('proxy_with_lookup.foo: ', proxy_with_lookup.foo);

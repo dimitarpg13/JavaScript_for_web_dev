@@ -127,40 +127,46 @@ console.log('named function expression for factorial(5): ', factorial_expr(5) );
 //
 // here are counter-examples which violate one or more of the conditions above:
 
-"use strict";
+{
+    "use strict";
 
 
-// no optimization: tail call is not returned
-function outerFunction() {
-    function innerFunction() {
-        console.log('Hello from inner function!');
+    // no optimization: tail call is not returned
+    function outerFunction() {
+        function innerFunction() {
+            console.log('Hello from inner function!');
+        }
+        innerFunction();
     }
-    innerFunction();
+
+    // no optimization: tail call is not directly returned
+    function outerFunctionSecond() {
+        function innerFunction() {
+            console.log('Hello for second time from inner function!');
+        }
+        let innerFunctionResult = innerFunction();
+        return innerFunctionResult;
+    }
+
+    // no optimization: tail call must be cast as a string after return
+    function outerFunctionThird() {
+        function innerFunction() {
+            return { 
+                outputStr: 'Hello for third time from inner function!',
+            
+                toString() {
+                    return this.outputStr
+                }
+            };
+        }
+        return innerFunction().toString();
+    }
+
+    outerFunction();
+    outerFunctionSecond();
+    console.log('outerFunctionThird() = ',outerFunctionThird());
 }
 
-// no optimization: tail call is not directly returned
-function outerFunctionSecond() {
-    function innerFunction() {
-        console.log('Hello for second time from inner function!');
-    }
-    let innerFunctionResult = innerFunction();
-    return innerFunctionResult;
-}
+// here are examples which will be optimized as they do not violate the tail call optimization conditions 
 
-// no optimization: tail call must be cast as a string after return
-function outerFunctionThird() {
-    function innerFunction() {
-        return { 
-            outputStr: 'Hello for third time from inner function!',
-        
-            toString() {
-                return this.outputStr
-             }
-        };
-    }
-    return innerFunction().toString();
-}
 
-outerFunction();
-outerFunctionSecond();
-console.log('outerFunctionThird() = ',outerFunctionThird());

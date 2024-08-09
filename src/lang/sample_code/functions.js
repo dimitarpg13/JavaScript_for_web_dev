@@ -96,3 +96,21 @@ factorial = function() {
 
 console.log('trueFactorial(5): ', trueFactorial(5)); // 120
 console.log('factorial(5): ', factorial(5));
+
+// The value of `arguments.callee` is not accessible to a script running in strict mode and will cause an
+// error when attempts are made to read it. Instead, one can use _named function expressions_ to achieve
+// the same result. For example:
+
+const factorial_expr = (function f(num) {
+    if (num <= 1) {
+        return 1;
+    } else {
+        return num * f(num - 1);
+    }
+});
+
+console.log('named function expression for factorial(5): ', factorial_expr(5) );
+
+//  The object `this`
+//
+// Inside a standard function, `this` is a reference to the context object that the function is operating on 

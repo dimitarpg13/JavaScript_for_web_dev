@@ -160,3 +160,7 @@ function outerFunctionThird() {
     }
     return innerFunction().toString();
 }
+
+outerFunction();
+outerFunctionSecond();
+console.log('outerFunctionThird() = ',outerFunctionThird());

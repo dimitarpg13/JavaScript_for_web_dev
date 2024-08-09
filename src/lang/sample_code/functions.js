@@ -114,3 +114,49 @@ console.log('named function expression for factorial(5): ', factorial_expr(5) );
 //  The object `this`
 //
 // Inside a standard function, `this` is a reference to the context object that the function is operating on 
+
+// tail call optimization requirements
+//
+// > the code is executing in strict mode
+//
+// > the return value of the outer function is the invoked tail call function
+//
+// > there is no further execution required after the tail call function returns
+//
+// > the tail call function is not a closure that refers to variables in the outer function's scope
+//
+// here are counter-examples which violate one or more of the conditions above:
+
+"use strict";
+
+
+// no optimization: tail call is not returned
+function outerFunction() {
+    function innerFunction() {
+        console.log('Hello from inner function!');
+    }
+    innerFunction();
+}
+
+// no optimization: tail call is not directly returned
+function outerFunctionSecond() {
+    function innerFunction() {
+        console.log('Hello for second time from inner function!');
+    }
+    let innerFunctionResult = innerFunction();
+    return innerFunctionResult;
+}
+
+// no optimization: tail call must be cast as a string after return
+function outerFunctionThird() {
+    function innerFunction() {
+        return { 
+            outputStr: 'Hello for third time from inner function!',
+        
+            toString() {
+                return this.outputStr
+             }
+        };
+    }
+    return innerFunction().toString();
+}

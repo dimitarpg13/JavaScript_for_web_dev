@@ -168,5 +168,40 @@ console.log('named function expression for factorial(5): ', factorial_expr(5) );
 }
 
 // here are examples which will be optimized as they do not violate the tail call optimization conditions 
+{
+    "use strict"
 
+    // optimization used: initial return values do not have stack frame implications 
+    function outerFunctionFourth(a, b) {
+        function innerFunction(x) {
+            console.log("from inside outerFunctionFourth.innerFunction: ", x);
+            return x;
+        }
+        if (a < b) {
+            return a;
+        }
+        return innerFunction(a + b);
+    }
+
+    // 
+
+    let res = outerFunctionFourth(7, 5);
+    console.log('res = outerFunctionFourth(7, 5): ', res);
+
+
+    // optimization used: both inner functions are considered to be in a tail position
+    function outerFunctionFifth(condition) {
+        function innerFunctionA() {
+            console.log('Inside innerFunctionA');
+            return 'innerFunctionA';
+        }
+        function innerFunctionB() {
+            console.log('Inside innerFunctionB');
+            return 'innerFunctionB';
+        }
+        return condition ? innerFunctionA() : innerFunctionB();
+    }
+
+    console.log('outerFunctionFifth(): ', outerFunctionFifth(true));
+}
 

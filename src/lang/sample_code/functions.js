@@ -245,7 +245,7 @@ console.log('named function expression for factorial(5): ', factorial_expr(5) );
    // As the function executes, variables are looked up in the scope chain for the reading and writing of 
    // values. Consider the following example:
    //
-   function compare(value1, value2) {
+   function compare_simple(value1, value2) {
      if (value1 < value2) {
         return -1;
      } else if (value1 > value2) {
@@ -255,16 +255,28 @@ console.log('named function expression for factorial(5): ', factorial_expr(5) );
      }
    }
 
-   let result = compare(5, 10);
-   console.log('result = = compare(5, 10): ', result);
+   let result_cmp = compare_simple(5, 10);
+   console.log('result = = compare(5, 10): ', result_cmp);
    
    // this code defines a function `compare()` that is called in the global execution context. When `compare()` is
    // called for the first time, a new activation object is created that contains `arguments`, `value1` and `value2`.
    // The global execution context's variable object is next in the `compare()` execution context's scope chain, 
    // which contains `this`, `result`, and `compare`. 
-   // the Figure shown below illustrates this arrangement:
+   // the Figure 1 shown below illustrates this arrangement:
    //
-   // [Figure: scope chain for function `compare()`](https://github.com/dimitarpg13/JavaScript_for_web_dev/blob/main/images/scope_chain_for_function_compare.png)
+   // [Figure 1: scope chain for function `compare()`](https://github.com/dimitarpg13/JavaScript_for_web_dev/blob/main/images/scope_chain_for_function_compare.png)
    //
-   
+   // Whenever a variable is accessed inside a function, the scope chain is searched for a variable with the given name.
+   // Once the function has completed, the local activation object is destroyed, leaving only the global scope in memory.
+   // Closures, however, behave differently.
+   // A function that is defined inside another function adds the containing function's activation object into its scope
+   // chain. So, in `createComparsionFunction()`, the anonymous function's scope chain actually contains a reference
+   // to the activation object for `createComparisonFunction()`. The Figure 2 below illustrates this relationship when the
+   // following code is executed
+   //
+   // [Figure 2: createComparisonFunction and anonymous function execution contexts](https://github.com/dimitarpg13/JavaScript_for_web_dev/blob/main/images/createComparisonFunction_and_anonymous_execution_contexts.png)
+
+   let compare_closure = createComparisonFunction('name');
+   let result_comp_closure = compare_closure({ name: 'Nicholas'}, {name: 'Matt'});
+   console.log('result_comp_closure = compare_closure({ name: \'Nicholas\'}, {name: \'Matt\'}): ', result_comp_closure);
 }

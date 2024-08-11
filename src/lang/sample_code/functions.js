@@ -262,5 +262,9 @@ console.log('named function expression for factorial(5): ', factorial_expr(5) );
    // called for the first time, a new activation object is created that contains `arguments`, `value1` and `value2`.
    // The global execution context's variable object is next in the `compare()` execution context's scope chain, 
    // which contains `this`, `result`, and `compare`. 
-
+   // the Figure shown below illustrates this arrangement:
+   //
+   // [Figure: scope chain for function `compare()`](https://github.com/dimitarpg13/JavaScript_for_web_dev/blob/main/images/scope_chain_for_function_compare.png)
+   //
+   
 }

@@ -205,3 +205,62 @@ console.log('named function expression for factorial(5): ', factorial_expr(5) );
     console.log('outerFunctionFifth(): ', outerFunctionFifth(true));
 }
 
+{
+  // coding for tail call optimization
+
+  // the function below will not be tail call optimized
+  function fib(n) {
+    if (n < 2) {
+        return n;
+    }
+
+    return fib(n - 1) + fib(n - 2);
+  }
+
+  // commented out because it takes too long
+  // console.log('fib(50) = ', fib(50));
+
+}
+
+// closures
+{
+   function createComparisonFunction(propertyName) {
+    return function(object1, object2) {
+        let value1 = object1[propertyName];
+        let value2 = object2[propertyName];
+
+        if (value1 < value2) {
+            return -1;
+        } else if (value1 > value2) {
+            return 1;
+        } else {
+            return 0;
+        }
+    };
+   }
+   // when a function is called, an execution context is created, and its scope chain is created. The activation
+   // object for the function is initialized with values for `arguments` and any named arguments. The outer 
+   // function's activation object is the second object in the scope chain. This process continues for all 
+   // containing functions until the scope chain terminates with the global execution context.
+   // As the function executes, variables are looked up in the scope chain for the reading and writing of 
+   // values. Consider the following example:
+   //
+   function compare(value1, value2) {
+     if (value1 < value2) {
+        return -1;
+     } else if (value1 > value2) {
+        return 1;
+     } else {
+        return 0;
+     }
+   }
+
+   let result = compare(5, 10);
+   console.log('result = = compare(5, 10): ', result);
+   
+   // this code defines a function `compare()` that is called in the global execution context. When `compare()` is
+   // called for the first time, a new activation object is created that contains `arguments`, `value1` and `value2`.
+   // The global execution context's variable object is next in the `compare()` execution context's scope chain, 
+   // which contains `this`, `result`, and `compare`. 
+
+}

@@ -221,7 +221,20 @@
     // use `[[Get]]` to retrieve a value from the source object and `[[Set]]` on the destination object to
     // assign the value
 
-        
+    let dest, src, result;
+    
+    dest = {};
+    src = { id: 'src' };
+
+    result = Object.assign(dest, src);
+
+    // Object.assign mutates the destination object and also returns that object after exiting
+    console.log('dest === result: ', dest === result); // true
+    console.log('dest !== src: ', dest !== src); // true
+    console.log('result: ', result); // { id: src }
+    console.log('dest: ', dest);   // { id: src }
+
+
 
     // Note on Enumerability and ownership of properties:
     //

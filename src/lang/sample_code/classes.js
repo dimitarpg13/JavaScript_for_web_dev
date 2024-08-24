@@ -255,8 +255,21 @@
     // 
 }
 
+{
+    // Multiple source objects
+    dest = {}
+
+    result = Object.assign(dest, { a: 'foo'}, { b: 'bar'});
+
+    console.log('multiple source result: ', result); // { a: foo, b: bar}
+}
 
 
+{
+    // Getters and setters with `Object.assign`
+
+    
+}
 
 
 

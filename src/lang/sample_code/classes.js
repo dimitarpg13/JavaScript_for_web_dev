@@ -537,8 +537,19 @@
     };
 
     let personName = person.name, personAge = person.age;
-    console.log('personName: ', personName, ', personAge: ', personAge);
+    console.log('personName: ', personName, ', personAge: ', personAge); // personName: Matt , personAge: 27
     
+    // Using object destructuring
+    let person2 = {
+        name: 'Matt O\'Dowd',
+        age: 27
+    };
+
+    let { name: personName2, age: personAge2 } = person2;
+
+    console.log('personName2: ', personName, ', personAge2: ', personAge); // personName: Matt , personAge: 27
+ 
+
 }
 
 

@@ -426,7 +426,62 @@
 }
 
 {
+    // Computed property keys
+
+    // Prior to the introduction of computed property keys, there was no way to dynamically 
+    // assign property keys in an object literal without declaring the object and then individually
+    // using the square bracket notation for property assignment. Example:
+    const nameKey = 'name';
+    const ageKey = 'age';
+    const jobKey = 'job';
+
+    let person = {};
+    person[nameKey] = 'Matt';
+    person[ageKey] = 27;
+    person[jobKey] = 'Software engineer';
+
+    console.log('person: ', person);
+
+    // with computed properties:
+
+    let person2 = {
+        [nameKey]: 'Matt',
+        [ageKey]: 27,
+        [jobKey]: 'Software engineer'
+    };
+
+    console.log('person2: ', person2);  // { name: 'Matt', age: 27, job: 'Software engineer' }
+
+    // Because the contents are evaluated as a JS expr it is possible to make the contents of the 
+    // computed property complex expressions which are evaluated upon instantiation
+    let uniqueToken = 0;
+
+    function getUniqueKey(key) {
+        return `${key}_${uniqueToken++}`;
+    }
+
+    let person3 = {
+       [getUniqueKey(nameKey)]: 'Matt',
+       [getUniqueKey(ageKey)]: 27,
+       [getUniqueKey(jobKey)]: 'Software engineer'
+    };
+
+    console.log('person3: ', person3); // { name_0: 'Matt', age_1: 27, job_2: 'Software engineer'}
     
+}
+
+{
+    // Concise Method Synthax
+    //
+    // when defining function properties of an object, the format almost always takes the form of a property
+    // key referencing an anonymous function expression
+    let person = {
+        sayName: function(name) {
+            console.log(`My name is ${name}`);
+        }
+    } ;
+
+    person.sayName('Matt'); // my name is Matt
 }
 
 

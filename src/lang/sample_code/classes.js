@@ -268,6 +268,98 @@
 {
     // Getters and setters with `Object.assign`
 
+    dest = {
+        set a(val) {
+            console.log('Invoked dest setter with param ${val}');
+        }
+    };
+    src = {
+        get a() {
+            console.log('Invoked src getter');
+            return 'foo';
+        }
+    };
+
+    Object.assign(dest, src);
+    // invoked src getter
+    // invoked dest setter with param foo
+
+    // Since the setter does not perform an assignment,
+    // no value is actually transferred
+    console.log('dest: ', dest); // { set a(val) {...}}
+}
+
+{
+    // `Object.assign()` is effectively performing a shallow copy from each source object. 
+    // if multiple objects have the same property defined, the last one to be copied will be the final value.
+    // Furthermore, any value retrieved from accessor properties, such as a getter, on a source object will be
+    // assigned as a static value on the destination object - there is no ability to transfer getters and setters
+    // between objects
+
+    let dest, src, result;
+
+    dest = { id: 'dest'};
+
+    result = Object.assign(dest, { id: 'src1', a: 'foo'}, { id: 'src2', b: 'bar'});
+
+    // Object.assign will overwrite duplicate properties
+    console.log('result: ', result);  // { id: src2, a: foo, b:bar }
+
+    // this can be observed by using a setter on the destination object
+    dest2 = {
+        set id(x) {
+            console.log(x);
+        }
+    };
+
+    Object.assign(dest2, { id: 'first'}, { id: 'second'}, { id: 'third'});
+    // first
+    // second
+    // third
+
+    console.log('dest2.id: ', dest2.id);
+    // undefined
+
+    // object references
+
+    dest3 = {};
+    src3 = { a: {} };
+    
+    Object.assign(dest3, src3);
+
+    // Shallow property copies means only object references copied.
+    console.log('dest3: ', dest3);     // { a : {} }
+    console.log('dest3.a === src3.a: ', dest3.a === src3.a);  // true
+    
+}
+
+{
+    // error thrown during `Object.assign()`
+    // `Object.assign()` is not atomic operation wich guarantees _transactional consistency_.
+    let dest, src, result;
+
+    dest = {};
+    src = {
+        a: 'foo',
+        get b() {
+            // error when `Object.assign()` invokes this getter
+            throw new Error();
+        },
+        c: 'bar'
+    };
+
+    try {
+        Object.assign(dest, src);
+    } catch (e) {}
+
+    // `Object.assign()` has no way of rolling back already performed changes,
+    // so set operations already performed on the destination object before the
+    // error is thrown remain:
+    console.log('dest: ', dest);  // { a: foo }
+      
+}
+
+{
     
 }
 

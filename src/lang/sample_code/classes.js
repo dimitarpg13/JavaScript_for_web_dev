@@ -360,8 +360,73 @@
 }
 
 {
-    
+    // Object Identity and Equality
+    //
+    // In versions prior to ECMAScript 6, there were several tricky corner cases where the `===` operator was
+    // insufficient
+
+    // These are cases where `===` behaves as expected:
+    console.log('true === 1: ', true === 1); // false
+    console.log('{} === {}: ', {} === {});  // false
+    console.log('"2" === 2: ', "2" === 2);  // false
+
+    // These have different representations in the JS engine and yet are treated as equal
+    console.log('+0 === -0: ', +0 === -0);  // true
+    console.log('+0 === 0: ', +0 === 0); // true
+    console.log('-0 === 0: ', -0 === 0); // true
+
+    // to determine NaN equivalence, the profoundly annoying isNaN() is required
+    console.log('NaN === NaN :', NaN === NaN);  // false
+    console.log('isNaN(NaN): ', isNaN(NaN));   // true
+
+    // to remedy these shortcomings ECMAScript 6 introduced `Object.is()`, which behaves mostly as `===`
+    // does but also accounts for the corner cases listed previously. 
+    console.log('Object.is(true, 1): ', Object.is(true, 1));   // false
+    console.log('Object.is({}, {}): ', Object.is({}, {}));  // false
+    console.log('Object.is("2", 2): ', Object.is("2", 2)); // false
+
+    // correct 0, -0, +0 equivalence/nonequivalence
+    console.log('Object.is(+0, -0): ', Object.is(+0, -0));  // false
+    console.log('Object.is(+0, 0): ', Object.is(+0, 0));  // true
+    console.log('Object.is(-0, 0): ', Object.is(-0, 0));  // false
+
+    // correct NaN equivalence:
+    console.log('Object.is(NaN, NaN): ', Object.is(NaN, NaN));  // true
 }
 
+{
+    // enhanced object syntax with ECMAScript 6
+
+    // Property Value Shorthand
+    let name = 'Matt';
+
+    let person = {
+        name: name
+    };
+
+    console.log('`person` not created via enhanced syntax: ', person);  // { name: 'Matt'}
+
+    let person2 = {
+      name
+    }
+
+    console.log('`person2` created via enhanced syntax: ', person2);  // { name: 'Matt'}
+
+    // minifiers will preserve property names between scopes to prevent breaking references
+
+    function makePerson(name) {
+        return {
+            name
+        };
+    }
+
+    let person3 = makePerson('Dimitar');
+
+    console.log('person3.name: ', person3.name); // Dimitar
+}
+
+{
+    
+}
 
 

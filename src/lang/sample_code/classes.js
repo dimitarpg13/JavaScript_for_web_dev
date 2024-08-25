@@ -482,6 +482,63 @@
     } ;
 
     person.sayName('Matt'); // my name is Matt
+
+    // the new shorthand method syntax follows this pattern :
+
+    let person2 = {
+        sayName(name) {
+            console.log(`My name is ${name}`);
+        }
+    };
+
+    person2.sayName('Matt');
+
+    // with setter and getter object expressions this becomes:
+
+    // without shorthand notation the setter and getter object expressions are clunky:
+    let person3 = {
+        name_: '',
+        get name() {
+            return this.name_;
+        },
+        set name(name) {
+            this.name_ = name;
+        },
+        sayName() {
+            console.log(`My name is ${this.name_}`);
+        }
+    }
+
+    person3.name = 'Matt O\'Dowd';
+    person3.sayName(); // My name is Matt
+
+    // shorthand method syntax 
+    const methodKey = 'sayName';
+
+    let person4 = {
+        [methodKey] (name) {
+            console.log(`My name is ${name}`);
+        }
+    }
+
+    person4.sayName('Matt Thortington');
+}
+
+{
+    // Object Destructuring
+    // ECMAScript 6 introduced object destructuring which allows to perform operation(s) using nested data within
+    // a single statement. Assignments are performed from object properties using syntax that matches the structure
+    // of the object.
+    
+    // Without object destructuring
+    let person = {
+        name: 'Matt',
+        age: 27
+    };
+
+    let personName = person.name, personAge = person.age;
+    console.log('personName: ', personName, ', personAge: ', personAge);
+    
 }
 
 

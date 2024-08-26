@@ -575,8 +575,77 @@
 
     // let { _ } = undefined; // TypeError
 
+    let personName4, personAge4;
 
+    let person4 = {
+        name: 'Matt O\'Dowd',
+        age: 27
+    };
 
+    ({name: personName4, age: personAge4} = person);
+
+    console.log('personName4: ', personName4, ', personAge4: ', personAge4); // personName4: Matt O'Dowd , personAge4: 27  
+
+}
+
+{
+    // Nested Destructuring
+
+    let person = {
+        name: 'Matt O\'Dowd',
+        age: 27,
+        job: {
+            title: 'Software Engineer'
+        }
+    };
+    let personCopy = {};
+
+    ({
+        name: personCopy.name,
+        age: personCopy.age,
+        job: personCopy.job
+    } = person);
+
+    // Because an object reference was assigned into personCopy, changing a property inside the person.job object 
+    // will be propagated to personCopy:
+    person.job.title = 'Hacker'
+
+    console.log('person: ', person); // { name: 'Matt O\'Dowd', age: 27, job: { title: 'Hacker' }}
+
+    console.log('personCopy: ', personCopy); // { name: 'Matt O\'Dowd', age: 27, job: { title: 'Hacker' }}
+
+    // deconstruing assignments can be nested to match nested property references
+    let { job: { title }} = person;
+
+    console.log('title: ', title); // title: Software engineer
+
+    // cannot use nested property references when an outer property is undefined.
+
+    // `foo` is undefined on the source object
+    // ({
+    //    foo: {
+    //        bar: personCopy.bar
+    //    }
+    // } = person); // TypeError: cannot destructure property `bar` of `undefined` or `null`
+
+    // `job` is undefined on the destination object
+    // ({
+    //    job: {
+    //        title: personCopy.job.title
+    //    }
+    // }) // TypeError: cannot set property `title` of `undefined`
+}
+
+{
+    // Partial Destructuring Completion
+    // 
+    // a destructured assignment involving multiple properties does not possess transactional consistency , 
+    // rather it is a sequential operation with independent outcomes. 
+    // For example if, within a single destructured expression with multiple assignments, the initial assignments 
+    // succeed but a later one throws an error, the destructured assignment will exit with partial completition 
+    // status and no completion guarantees whatsoever.
+    
+    
 
 }
 

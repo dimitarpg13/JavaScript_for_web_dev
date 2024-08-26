@@ -622,11 +622,16 @@
     // cannot use nested property references when an outer property is undefined.
 
     // `foo` is undefined on the source object
-    // ({
-    //    foo: {
-    //        bar: personCopy.bar
-    //    }
-    // } = person); // TypeError: cannot destructure property `bar` of `undefined` or `null`
+    try {
+
+      ({
+         foo: {
+            bar: personCopy.bar
+         }
+      } = person); // TypeError: cannot destructure property `bar` of `undefined` or `null`
+    } catch (e) {
+        console.log('Exception was thrown and caught: ', e);
+    }
 
     // `job` is undefined on the destination object
     // ({
@@ -645,8 +650,48 @@
     // succeed but a later one throws an error, the destructured assignment will exit with partial completition 
     // status and no completion guarantees whatsoever.
     
-    
+    let person = {
+        name: 'Matt O\'Dowd',
+        age: 27
+    };
+
+    let personName, personBar, personAge;
+
+    try {
+      // person.foo is undefined, so this will throw an error
+      ({name: personName, foo: { bar: personBar }, age: personAge} = person);
+    } catch (e) {}
+
+    console.log('personName: ', personName, ', personBar: ', personBar, ', personAge: ', personAge);
+    // personName: Matt O'Down, personBar: undefined, personAge: undefined
 
 }
 
+
+{
+    // Parameter Context Matching
+
+    let person = {
+        name: 'Matt O\'Dowd',
+        age: 27
+    };
+
+    function printPerson(foo, {name, age}, bar) {
+        console.log('printPerson arguments: ', arguments);
+        console.log('name: ', name, ', age: ', age);
+    }
+
+    function printPerson2(foo, {name: personName, age: personAge}, bar) {
+        console.log('printPerson2 arguments: ', arguments);
+        console.log('personName: ', personName, ', personAge: ', personAge);
+    }
+
+    printPerson('1st', person, '2nd');
+    // {'0': '1st', '1': { name: 'Matt O\'Dowd', age: 27}, '2': '2nd'}
+    // name: Matt O'Dowd , age: 27 
+
+    printPerson2('1st', person, '2nd');
+    // {'0': '1st', '1': { name: 'Matt O\'Dowd', age: 27}, '2': '2nd'}
+    // name: Matt O'Dowd , age: 27 
+}
 

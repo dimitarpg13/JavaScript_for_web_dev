@@ -548,7 +548,35 @@
     let { name: personName2, age: personAge2 } = person2;
 
     console.log('personName2: ', personName, ', personAge2: ', personAge); // personName: Matt , personAge: 27
- 
+
+    // Destructuring using single object literal-like syntax
+    let person3 = {
+        name: 'Matt O\'Dowd',
+        age: 27
+    }
+
+    let { name, age, job } = person3;
+
+    console.log('name: ', name); // name: Matt O'Dowd
+    console.log('age: ', age); // age: 27 
+    console.log('job: ', job='Software engineer')
+
+    // destructuring uses the interal function `ToObject()` to coerce a source into an object. 
+    // primitive types are treated as objects when used in a destructuring operation.
+    // By definition, `null` and `undefined` cannot be destructured and will throw error.
+
+    let { length } = 'foobar';
+    console.log('length: ', length);  // length: 6
+
+    let { constructor: c } = 4;
+    console.log( 'c === Number: ', c === Number); // c === Number: true
+
+    // let { _ } = null;  // TypeError
+
+    // let { _ } = undefined; // TypeError
+
+
+
 
 }
 

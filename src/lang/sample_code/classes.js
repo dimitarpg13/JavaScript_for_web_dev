@@ -741,3 +741,42 @@
     console.log('person2 instanceof Person: ', person2 instanceof Person); // true
 
 }
+
+{
+    // Object Creation through function creation
+
+    let Person = function(name, age, job) {
+        this.name = name;
+        this.age = age;
+        this.job = job;
+        this.sayName = function() {
+            console.log('Inside Person::sayName(): ', this.name);
+        }
+    }
+
+    let person1 = new Person("Nicholas", 29, "Software Engineer");
+    let person2 = new Person("Greg", 27, "Doctor");
+
+    person1.sayName();  // Inside Person::sayName():  Nicholas
+    person2.sayName();  // Inside Person::sayName():  Greg
+
+    // The `Person()` function may be called in any of the following ways
+
+    // call as a function
+    Person("Greg", 27, "Doctor"); // adds to global
+    global.sayName(); // Inside Person::sayName():  Greg
+
+    // use as a constructor
+    let person = new Person("Nicholas", 29, "Software Engineer");
+    person.sayName(); // Inside Person::sayName():  Nicholas
+
+    // call in the scope of another object
+    let o = new Object();
+    Person.call(o, "Kristen", 25, "Nurse");
+    o.sayName(); // Inside Person::sayName(): Kristen
+}
+
+{
+    // Problems with Constructors
+    
+}

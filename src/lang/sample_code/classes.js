@@ -796,5 +796,91 @@
 
     console.log('person1.sayName == person2.sayName: ', person1.sayName == person2.sayName); // false
 
+    // it is possible to work around this limitation by moving the function definition outside of the 
+    // constructor
 
+    function PersonOptimized(name, age, job) {
+      this.name = name;
+      this.age = age;
+      this.job = job;
+      this.sayName = sayName;   
+    }
+
+    function sayName() {
+        console.log(this.name);
+    }
+
+    let person3 = new PersonOptimized("Nicholas", 29, "Software Engineer");
+    let person4 = new PersonOptimized("Greg", 27, "Doctor");
+
+    person3.sayName(); // Nicholas
+    person4.sayName(); // Greg
+
+    console.log('person3.sayName == person4.sayName: ', person3.sayName == person4.sayName); // true
+}
+
+{
+    // The Prototype Pattern
+    //
+    // solves the probem with object creation when the object posseses multiple instance methods
+    //
+    // Each function is created with a `prototype` property, which is an object containing properties and
+    // methods that should be available to instances of a particular reference type. 
+    // This object serves as a _prototype_ for the object to be created once the ctor is called. 
+    // The benefit of using the protype is that all of its properties and methods are shared among object instances.
+    // Instead of assigning object information in the ctor, they can be assigned directly to the prototype
+
+    function Person() {}
+
+    Person.prototype.name = "Nicholas";
+    Person.prototype.age = 29;
+    Person.prototype.job = "Software Engineer";
+
+    Person.prototype.sayName = function() {
+        console.log('Inside Person.prototype.sayName(): ', this.name);
+    }
+
+    let person1 = new Person();
+    person1.sayName();  // Nicholas
+
+    let person2 = new Person();
+    person2.sayName(); // Nicholas
+
+    console.log('person1.sayName == person2.sayName: ', person1.sayName == person2.sayName); // true
+
+    // using a function expression 
+    let PersonFE = function() {};
+
+    PersonFE.prototype.name = "Nicholas";
+    PersonFE.prototype.age = 29;
+    PersonFE.prototype.job = "Software Engineer";
+    PersonFE.prototype.sayName = function() {
+        console.log(this.name);
+    }
+    // Note that the property `job` and the method `sayName()` are added directly to the `prototype` property of
+    // `Person`, leaving the constructor empty. However, we still can call the constructor to create a new object
+    // and the constructed object will have the properties and methods present and instantiated correctly. 
+    // Unlike the constructor pattern, the properties and methods are all shared among instances, so 
+    // `person1` and `person2` are both accessing the same set of properties and the same `sayName()` function. 
+
+    let person3 = new PersonFE();
+    person3.sayName(); // Nicholas
+    
+    let person4 = new PersonFE();
+    person4.sayName(); // Nicholas
+
+    console.log('person3.sayName == person4.sayName: ', person3.sayName == person4.sayName); // true
+
+}
+
+{
+    // How Prototypes Work?
+
+    // whenever a function is created, its `prototype` property is also created according to a specific set of rules. 
+    // By default, all prototypes get a property `constructor` that points back to the function on which it is a 
+    // property. For example, in the previous example, `Person.prototype.constructor` points to `Person`. Depending
+    // on the constructor other properties and methods may be added to the prototype.
+    //
+    // when defining a custom constructor, the property gets the `constructor` property only by default 
+    
 }

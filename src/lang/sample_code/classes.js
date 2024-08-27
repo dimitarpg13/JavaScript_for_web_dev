@@ -695,3 +695,49 @@
     // name: Matt O'Dowd , age: 27 
 }
 
+{
+    // Object Creation - The Factory Pattern
+    function createPerson(name, age, job) {
+        let o = new Object();
+        o.name = name;
+        o.age = age;
+        o.job = job;
+        o.sayName = function() {
+            console.log('Inside Person::sayName(): ', this.name);
+        }
+        return o;
+    }
+
+    let person1 = createPerson("Nicholas", 29, "Software Engineer");
+    let person2 = createPerson("Greg", 27, "Doctor");
+
+    person1.sayName();
+    person2.sayName();
+}
+
+{
+    // Object Creation with the Function Constructor Pattern
+    function Person(name, age, job) {
+        this.name = name;
+        this.age = age;
+        this.job = job;
+        this.sayName = function() {
+            console.log('Inside Person::sayName(): ', this.name);
+        };
+    }
+
+    let person1 = new Person("Nicholas", 29, "Software Engineer");
+    let person2 = new Person("Greg", 27, "Doctor");
+
+    person1.sayName(); // Inside Person::sayName(): Nicholas
+    person2.sayName(); // Inside Person::sayName(): Greg
+
+    console.log('person1.constructor == Person: ', person1.constructor == Person); // true
+    console.log('person2.constructor == Person: ', person2.constructor == Person); // true
+
+    console.log('person1 instanceof Object: ', person1 instanceof Object);  // true
+    console.log('person1 instanceof Person: ', person1 instanceof Person); // true
+    console.log('person2 instanceof Object: ', person2 instanceof Object); // true
+    console.log('person2 instanceof Person: ', person2 instanceof Person); // true
+
+}

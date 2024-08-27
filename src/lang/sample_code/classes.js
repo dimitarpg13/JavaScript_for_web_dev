@@ -881,6 +881,45 @@
     // property. For example, in the previous example, `Person.prototype.constructor` points to `Person`. Depending
     // on the constructor other properties and methods may be added to the prototype.
     //
-    // when defining a custom constructor, the property gets the `constructor` property only by default 
+    // when defining a custom constructor, the property gets the `constructor` property only by default; all other
+    // methods are ingerited from `Object`. Each time the constructor is called to create a new instance, that instance
+    // has an internal pointer to the constructor's prototype. In ECMA-262, this is called `[[Prototype]]`. 
+    // There is no standard way to access `[[Prototype]]` from script, but most browsers support a property on every 
+    // object called `__proto__`. Important to understand is that a direct link exists between the instance and 
+    // constructor's prototype but not between the instance and the constructor.
+
+    // Refer to [Relationships Between Constructor Prototype and Object Instance](https://github.com/dimitarpg13/JavaScript_for_web_dev/blob/main/images/relationships_btw_ctor_prototype_and_object_instances.png)
+    // for details on those relationships.
+
+    /**
+     * Constructor function can exist as function expression or function declaration, so both of these are suitable:
+     *   function Person {}
+     *   let Person = function() {}
+     */
+    function Person() {}
+
+    /**
+     * Upon declaration, the constructor function already has a prototype object associated with it
+     */
+    console.log('typeof Person.prototype: ', typeof Person.prototype);
+    console.log('Person.prototype: ', Person.prototype);
+    // {
+    //   constructor: f Person(),
+    //   __proto__: Object
+    // }
+
+    /**
+     * As mentioned previously, the constructor function has a `prototype` reference to the prototype
+     * object, and the prototype object has a `constructor` reference to the constructor function.
+     * These references are cyclical
+     */
+    console.log('Person.prototype.constructor == Person: ', Person.prototype.constructor == Person); // true
+
+    /**
+     * Any normal prototype chain will terminate at the Object prototype.
+     * The prototype of the Object prototype is null
+     */
+    console.log('Person.prototype.__proto__ === Object.prototype: ', Person.prototype.__proto__ === Object.prototype); // true
+    console.log()
     
 }

@@ -778,5 +778,23 @@
 
 {
     // Problems with Constructors
-    
+    // Methods are created once for each instance. For example , in the previous sample code both `person1` and
+    // `person2` have a method called `sayName()`, but those methods are not the same instance of `Function`. 
+    // Functions are ECMAScript objects , so every time a function is defined, an object behind it is being
+    // instantiated.
+
+    function Person(name, age, job) {
+        this.name = name;
+        this.age = age;
+        this.job = job;
+        this.sayName = new Function("console.log(this.name)"); // logical equivalent
+    }
+
+    let person1 = new Person("Nicholas", 29, "Software Engineer");
+    let person2 = new Person("Greg", 27, "Doctor");
+
+
+    console.log('person1.sayName == person2.sayName: ', person1.sayName == person2.sayName); // false
+
+
 }

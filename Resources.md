@@ -2,6 +2,8 @@
 
 ## Articles and Papers
 
+[Unlocking the Power of Functional Programming in JavaScript: A Comprehensive Guide, Kurapati Mahesh, 2024](https://dev.to/urstrulyvishwak/unlocking-the-power-of-functional-programming-in-javascript-a-comprehensive-guide-fbk)
+
 [Understanding Web Storage: LocalStorage, SessionStorage, and Cookies, Abhay Kumar, 2024](https://dev.to/abhay1kumar/understanding-web-storage-localstorage-sessionstorage-and-cookies-1384?context=digest)
 
 [Promises: Linguistic Support for Efficient Asynchronous Procedure Calls in Distributed Systems, Barbara Liskov, MIT, 1988](https://github.com/dimitarpg13/JavaScript_for_web_dev/blob/main/literature/liskov1988.pdf)

@@ -14,7 +14,9 @@
 
 ## Specifications
 
+[ECMA 262, 6th Edition, June 2015](https://github.com/dimitarpg13/JavaScript_for_web_dev/blob/main/literature/ECMA-262_6th_edition_june_2015.pdf)
 
+[ECMA 262, 15th Edition, June 2024](https://github.com/dimitarpg13/JavaScript_for_web_dev/blob/main/literature/ECMA-262_15th_edition_june_2024.pdf)
 
 ## Open Source Web-based projects in JavaScript
 

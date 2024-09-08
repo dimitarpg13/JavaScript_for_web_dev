@@ -2,7 +2,7 @@
 
 ## Articles and Papers
 
-[Unlocking the Power of Functional Programming in JavaScript: A Comprehensive Guide, Kurapati Mahesh, 2024](https://dev.to/urstrulyvishwak/unlocking-the-power-of-functional-programming-in-javascript-a-comprehensive-guide-fbk)
+[Unlocking the Power of Functional Programming in JavaScript: A Comprehensive Guide, Kurapati Mahesh, 2023](https://dev.to/urstrulyvishwak/unlocking-the-power-of-functional-programming-in-javascript-a-comprehensive-guide-fbk)
 
 [Understanding Web Storage: LocalStorage, SessionStorage, and Cookies, Abhay Kumar, 2024](https://dev.to/abhay1kumar/understanding-web-storage-localstorage-sessionstorage-and-cookies-1384?context=digest)
 

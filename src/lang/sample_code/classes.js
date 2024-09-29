@@ -3,6 +3,22 @@
 // ECMAScript objects can be viewed as hash tables. 
 
 {
+
+    // Data Properties
+    //
+    // Data properties contain a single location for a data value. Values are from anad written to this location
+    // Data properties have four attributes describing their behavior:
+    //
+    // > [[Configurable]] - indicates if the property may be redefined by removing the property via `delete`, changing
+    // the property's attributes, or changing the property into an accessor property. By default, this is trie for all
+    // properties defined directly on an object. Example: see person_two below.
+    //
+    // > [[Enumerable]] - indicates if the property will be returned in a `for-in` loop. By default, this is true for 
+    // all properties defined directly on an object. Example: see person_two below.
+    //
+    // > [[Writable]]
+
+
     let person_one = new Object();
 
     person_one.name = "Nicholas";
@@ -920,6 +936,34 @@
      * The prototype of the Object prototype is null
      */
     console.log('Person.prototype.__proto__ === Object.prototype: ', Person.prototype.__proto__ === Object.prototype); // true
-    console.log()
+    console.log('Person.prototype.__proto__.constructor == Object: ', Person.prototype.__proto__.constructor == Object); // ture
+    console.log('Person.prototype.__proto__.__proto__ === null: ', Person.prototype.__proto__.__proto__ === null); // true
     
+    console.log('Person.prototype.__proto__: ', Person.prototype.__proto__); // [Object: null prototype] {}
+
+    let person1 = new Person(),
+        person2 = new Person();
+    // the constructor, the prototype object, and an instance are three
+    // completely distinct objects
+    console.log('person1 !== Person: ', person1 !== Person); // true
+    console.log('person1 !== Person.prototype: ', person1 !== Person.prototype); // true
+    console.log('Person.prototype !== Person: ', Person.prototype !== Person); // true
+
+    // An instance is linked to the prototype through `__proto__`, which is the literal
+    // manifestation of the [[Prototype]] hidden property. 
+    //
+    // A constructor is linked to the prototype through the constructor proeprty.
+    //
+    // An instance has no direct link to the constructor, only through the prototype.
+    console.log('person1.__proto__ === Person.prototype: ', person1.__proto__ === Person.prototype);  // true
+    console.log('person1.__proto__.constructor === Person: ', person1.__proto__.constructor === Person); // true
+
+    // two instances created from the same constructor function will share a prototype object
+    console.log('person1.__proto__ === person2.__proto__: ', person1.__proto__ === person2.__proto__);
+
+    // instance will check the instance's prototype chain against the prototype property of a constructor function
+    console.log('person1 instanceof Person: ', person1 instanceof Person);  // true
+    console.log('person1 instanceof Object: ', person1 instanceof Object);  // true
+    
+
 }

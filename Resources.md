@@ -2,6 +2,8 @@
 
 ## Articles and Papers
 
+[Unlocking the Power of Functional Programming in JavaScript: A Comprehensive Guide, Kurapati Mahesh, 2023](https://dev.to/urstrulyvishwak/unlocking-the-power-of-functional-programming-in-javascript-a-comprehensive-guide-fbk)
+
 [Understanding Web Storage: LocalStorage, SessionStorage, and Cookies, Abhay Kumar, 2024](https://dev.to/abhay1kumar/understanding-web-storage-localstorage-sessionstorage-and-cookies-1384?context=digest)
 
 [Promises: Linguistic Support for Efficient Asynchronous Procedure Calls in Distributed Systems, Barbara Liskov, MIT, 1988](https://github.com/dimitarpg13/JavaScript_for_web_dev/blob/main/literature/liskov1988.pdf)
@@ -14,7 +16,9 @@
 
 ## Specifications
 
+[ECMA 262, 6th Edition, June 2015](https://github.com/dimitarpg13/JavaScript_for_web_dev/blob/main/literature/ECMA-262_6th_edition_june_2015.pdf)
 
+[ECMA 262, 15th Edition, June 2024](https://github.com/dimitarpg13/JavaScript_for_web_dev/blob/main/literature/ECMA-262_15th_edition_june_2024.pdf)
 
 ## Open Source Web-based projects in JavaScript
 

@@ -11,13 +11,19 @@
     //
     // > [[Configurable]] - indicates if the property may be redefined by removing the property via `delete`, changing
     // the property's attributes, or changing the property into an accessor property. By default, this is trie for all
-    // properties defined directly on an object. Example: see person_two below.
+    // properties defined directly on an object. Example: see person_two definition below.
     //
     // > [[Enumerable]] - indicates if the property will be returned in a `for-in` loop. By default, this is true for 
-    // all properties defined directly on an object. Example: see person_two below.
+    // all properties defined directly on an object. Example: see person_two definition below.
     //
-    // > [[Writable]]
-
+    // > [[Writable]] - indicates if the property's value can be changed. By default, this is true for all properties 
+    // defined directly on an object. Example: see person_two definition below.
+    //
+    // > [[Value]] - contains the actual data value for the property. This is the location from which the property's 
+    // value is read and the location to which new values are saved. The default value for this attribute is 
+    // `undefined`.
+    //
+    //
 
     let person_one = new Object();
 
@@ -43,6 +49,11 @@
 
     person_two.sayName();
 
+    // To change any of the default property attributes, one must use the `Object.defineProperty()` method. This method
+    // accepts three arguments: the object on which the property should be added or modified, the name of the property, and 
+    // a descriptor object. The properties on the descriptor object match the attribute names: `configurable`, `writable`, 
+    // and `value`. 
+
     let person_three = {};
     Object.defineProperty(person_three, 'name', {
         writable: false,
@@ -61,6 +72,10 @@
     console.log('person_four.name: ', person_four.name); // "Nicholas"
     delete person_four.name;
     console.log('person_four.name: ', person_four.name); // "Nicholas"
+    // Here setting `configurable` to `false` means that the property cannot be removed from the object.
+    // Calling `delete` on the property has no effect in nonstrict mode and throws an error in strict mode.
+    // Once a property has been defined as nonconfigurable, it cannot become configurable again. 
+
 
     // Throws an error `TypeError: Cannot redefine property: name`
     // Object.defineProperty(person_four, "name", {
